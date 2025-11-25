@@ -1,10 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 
-const apiKey = process.env.API_KEY || '';
-// Initialize the client securely. 
-// Note: In a real production app, ensure API keys are not exposed to the client if not intended for public use,
-// or use a proxy. For this demo, we assume the environment variable is injected.
-const ai = new GoogleGenAI({ apiKey });
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const generateCaption = async (platform: string, topic: string, tone: string = 'professional'): Promise<string> => {
   try {
