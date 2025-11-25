@@ -34,23 +34,23 @@
         height: 8px;
       }
       ::-webkit-scrollbar-track {
-        background: #1e293b;
+        background: #09090b; /* zinc-950 */
       }
       ::-webkit-scrollbar-thumb {
-        background: #475569;
+        background: #3f3f46; /* zinc-700 */
         border-radius: 4px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #64748b;
+        background: #52525b; /* zinc-600 */
       }
       
       .glass-panel {
-        background: rgba(30, 41, 59, 0.7);
+        background: rgba(24, 24, 27, 0.7); /* zinc-900 */
         backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.05);
       }
     </style>
-  <script type="importmap">
+<script type="importmap">
 {
   "imports": {
     "react": "https://aistudiocdn.com/react@^19.2.0",
@@ -62,7 +62,7 @@
 }
 </script>
 </head>
-  <body class="bg-slate-950 text-slate-100 antialiased">
+  <body class="bg-black text-zinc-100 antialiased selection:bg-brand-500/30 selection:text-brand-200">
     <div id="root"></div>
     <!-- THIS SCRIPT IS REQUIRED TO LOAD YOUR REACT APP -->
     <script type="module" src="/src/index.tsx"></script>

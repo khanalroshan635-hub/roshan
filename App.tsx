@@ -46,7 +46,7 @@ const getPlatformIcon = (text: string) => {
   if (lower.includes('instagram')) return <Instagram className="text-pink-500" />;
   if (lower.includes('youtube')) return <Youtube className="text-red-500" />;
   if (lower.includes('tiktok')) return <Music className="text-cyan-400" />;
-  if (lower.includes('telegram')) return <Send className="text-blue-400" />;
+  if (lower.includes('telegram')) return <Send className="text-brand-400" />;
   if (lower.includes('facebook')) return <Facebook className="text-blue-600" />;
   if (lower.includes('pinterest')) return <Pin className="text-red-600" />;
   if (lower.includes('twitter') || lower.includes(' x ')) return <Twitter className="text-sky-400" />;
@@ -56,7 +56,7 @@ const getPlatformIcon = (text: string) => {
   if (lower.includes('discord')) return <Gamepad2 className="text-indigo-400" />;
   if (lower.includes('linkedin')) return <Linkedin className="text-blue-700" />;
   if (lower.includes('podcast') || lower.includes('audio')) return <Mic className="text-orange-400" />;
-  return <Globe className="text-slate-400" />;
+  return <Globe className="text-zinc-400" />;
 };
 
 const App: React.FC = () => {
@@ -377,25 +377,25 @@ const App: React.FC = () => {
   // --- Views ---
 
   const renderLanding = () => (
-    <div className="min-h-screen bg-slate-950 flex flex-col font-sans">
+    <div className="min-h-screen bg-black flex flex-col font-sans">
       {/* Navbar */}
-      <nav className="border-b border-slate-800 bg-slate-900/90 backdrop-blur-md sticky top-0 z-50">
+      <nav className="border-b border-zinc-800 bg-black/90 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <Logo />
             <div className="hidden md:flex items-center gap-8">
-              <a href="#home" className="text-slate-300 hover:text-white text-sm font-semibold uppercase tracking-wider">Home</a>
-              <a href="#services" className="text-slate-300 hover:text-white text-sm font-semibold uppercase tracking-wider">Services</a>
+              <a href="#home" className="text-zinc-400 hover:text-white text-sm font-semibold uppercase tracking-wider transition-colors">Home</a>
+              <a href="#services" className="text-zinc-400 hover:text-white text-sm font-semibold uppercase tracking-wider transition-colors">Services</a>
               <div className="flex items-center gap-3 ml-4">
                 <button 
                   onClick={() => setPage(PageState.LOGIN)}
-                  className="text-white font-bold hover:text-blue-400 px-4 py-2"
+                  className="text-white font-bold hover:text-brand-400 px-4 py-2 transition-colors"
                 >
                   Login
                 </button>
                 <button 
                   onClick={() => setPage(PageState.SIGNUP)}
-                  className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-lg font-bold transition-all shadow-lg shadow-blue-900/40"
+                  className="bg-brand-600 hover:bg-brand-500 text-white px-6 py-2.5 rounded-lg font-bold transition-all shadow-lg shadow-brand-900/40"
                 >
                   Sign Up
                 </button>
@@ -407,32 +407,32 @@ const App: React.FC = () => {
 
       {/* Hero Section */}
       <div id="home" className="relative pt-16 pb-24 overflow-hidden bg-[url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=2029&auto=format&fit=crop')] bg-cover bg-center">
-        <div className="absolute inset-0 bg-slate-950/90"></div>
+        <div className="absolute inset-0 bg-black/90"></div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
           <div className="text-left">
-            <div className="inline-block bg-blue-900/30 text-blue-400 px-4 py-1.5 rounded-full text-sm font-bold mb-6 border border-blue-800">
+            <div className="inline-block bg-brand-900/30 text-brand-400 px-4 py-1.5 rounded-full text-sm font-bold mb-6 border border-brand-800/50">
                Best SMM Panel in Nepal 🇳🇵
             </div>
             <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-6 leading-tight">
               Cheapest Social Media <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-indigo-400">
                 Growth Services
               </span>
             </h1>
-            <p className="text-lg text-slate-300 mb-8 max-w-lg leading-relaxed">
+            <p className="text-lg text-zinc-400 mb-8 max-w-lg leading-relaxed">
               We accept eSewa & Khalti. Boost your Instagram, TikTok, Pinterest, Telegram and YouTube with the most trusted panel in Nepal.
             </p>
             <div className="flex flex-wrap gap-4">
               <button 
                 onClick={() => setPage(PageState.SIGNUP)}
-                className="px-8 py-4 bg-blue-600 text-white rounded-xl font-bold text-lg hover:bg-blue-500 transition-all shadow-lg shadow-blue-900/50 flex items-center gap-2"
+                className="px-8 py-4 bg-brand-600 text-white rounded-xl font-bold text-lg hover:bg-brand-500 transition-all shadow-lg shadow-brand-900/50 flex items-center gap-2"
               >
                 <Zap className="w-5 h-5 fill-current" />
                 Start Now
               </button>
               <button 
                 onClick={() => window.open(`https://wa.me/${SUPPORT_PHONE}`, '_blank')}
-                className="px-8 py-4 bg-slate-800 text-white border border-slate-700 rounded-xl font-bold text-lg hover:bg-slate-700 transition-all flex items-center gap-2"
+                className="px-8 py-4 bg-zinc-900 text-white border border-zinc-700 rounded-xl font-bold text-lg hover:bg-zinc-800 transition-all flex items-center gap-2"
               >
                 <MessageCircle className="w-5 h-5" />
                 WhatsApp Us
@@ -441,30 +441,30 @@ const App: React.FC = () => {
           </div>
 
           {/* Quick Login Card */}
-          <div className="bg-slate-900/80 backdrop-blur-xl p-8 rounded-2xl border border-slate-700 shadow-2xl max-w-md mx-auto w-full">
+          <div className="bg-zinc-950/80 backdrop-blur-xl p-8 rounded-2xl border border-zinc-800 shadow-2xl max-w-md mx-auto w-full">
             <h3 className="text-2xl font-bold text-white mb-6 text-center">Login to Panel</h3>
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
-                <label className="text-xs font-bold text-slate-400 uppercase ml-1">Username / Email</label>
+                <label className="text-xs font-bold text-zinc-500 uppercase ml-1">Username / Email</label>
                 <input 
                   type="text" 
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full mt-1 bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                  className="w-full mt-1 bg-black border border-zinc-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all placeholder-zinc-700"
                   placeholder="Enter username"
                 />
               </div>
               <div>
-                <label className="text-xs font-bold text-slate-400 uppercase ml-1">Password</label>
+                <label className="text-xs font-bold text-zinc-500 uppercase ml-1">Password</label>
                 <input 
                   type="password" 
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full mt-1 bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                  className="w-full mt-1 bg-black border border-zinc-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all placeholder-zinc-700"
                   placeholder="Enter password"
                 />
               </div>
-              <button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-3.5 rounded-lg transition-all shadow-lg transform active:scale-[0.98]">
+              <button className="w-full bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3.5 rounded-lg transition-all shadow-lg transform active:scale-[0.98]">
                 Sign In
               </button>
             </form>
@@ -473,17 +473,17 @@ const App: React.FC = () => {
       </div>
 
       {/* Services Preview Table */}
-      <div id="services" className="py-20 bg-slate-950">
+      <div id="services" className="py-20 bg-zinc-950">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">Our Cheapest Services</h2>
-            <div className="h-1 w-20 bg-blue-600 mx-auto rounded-full"></div>
-            <p className="mt-4 text-slate-400">Providing services for all major platforms</p>
+            <div className="h-1 w-20 bg-brand-600 mx-auto rounded-full"></div>
+            <p className="mt-4 text-zinc-400">Providing services for all major platforms</p>
             <div className="flex justify-center gap-4 mt-6 flex-wrap">
                 <Instagram className="text-pink-500 w-8 h-8" />
                 <Youtube className="text-red-500 w-8 h-8" />
                 <Music className="text-cyan-400 w-8 h-8" />
-                <Send className="text-blue-400 w-8 h-8" />
+                <Send className="text-brand-400 w-8 h-8" />
                 <Pin className="text-red-600 w-8 h-8" />
                 <Facebook className="text-blue-600 w-8 h-8" />
                 <Twitter className="text-sky-400 w-8 h-8" />
@@ -492,24 +492,24 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-slate-900 rounded-xl overflow-hidden border border-slate-800 shadow-2xl">
+          <div className="bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800 shadow-2xl">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-slate-800 text-xs text-slate-400 uppercase tracking-wider font-bold">
+                <thead className="bg-black text-xs text-zinc-400 uppercase tracking-wider font-bold">
                   <tr>
                     <th className="p-4 text-left">Platform</th>
                     <th className="p-4 text-left">Service</th>
                     <th className="p-4 text-left">Rate (NPR)</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800">
+                <tbody className="divide-y divide-zinc-800">
                   {services.slice(0, 10).map(s => (
-                    <tr key={s.id} className="text-sm text-slate-300 hover:bg-slate-800/50 transition-colors">
+                    <tr key={s.id} className="text-sm text-zinc-300 hover:bg-zinc-800/50 transition-colors">
                       <td className="p-4">
                         {getPlatformIcon(s.category)}
                       </td>
                       <td className="p-4 font-medium text-white">{s.name}</td>
-                      <td className="p-4 text-blue-400 font-bold">Rs. {s.rate.toFixed(2)}</td>
+                      <td className="p-4 text-brand-400 font-bold">Rs. {s.rate.toFixed(2)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -520,19 +520,19 @@ const App: React.FC = () => {
       </div>
       
       {/* Footer */}
-      <footer className="bg-slate-950 pt-16 pb-8 border-t border-slate-800">
+      <footer className="bg-black pt-16 pb-8 border-t border-zinc-900">
          <div className="max-w-7xl mx-auto px-4 text-center">
             <Logo />
-            <p className="text-slate-500 mt-4">Nepal's #1 Trusted SMM Panel.</p>
-            <p className="text-slate-600 text-sm mt-8">&copy; 2024 Grokhali SMM. All Rights Reserved.</p>
+            <p className="text-zinc-500 mt-4">Nepal's #1 Trusted SMM Panel.</p>
+            <p className="text-zinc-600 text-sm mt-8">&copy; 2024 Grokhali SMM. All Rights Reserved.</p>
          </div>
       </footer>
     </div>
   );
 
   const renderAuth = (isLogin: boolean) => (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-slate-900 rounded-2xl shadow-2xl border border-slate-800 p-8">
+    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-zinc-950 rounded-2xl shadow-2xl border border-zinc-800 p-8">
         <div className="text-center mb-8">
           <Logo />
           <h2 className="text-2xl font-bold text-white mt-6">
@@ -542,33 +542,33 @@ const App: React.FC = () => {
         
         <form onSubmit={isLogin ? handleLogin : handleSignup} className="space-y-5">
           <div>
-            <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Username / Email</label>
+            <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Username / Email</label>
             <input 
               type="text" 
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full bg-black border border-zinc-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all placeholder-zinc-700"
               placeholder="Username"
             />
           </div>
           <div>
-            <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Password</label>
+            <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Password</label>
             <input 
               type="password" 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full bg-black border border-zinc-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all placeholder-zinc-700"
               placeholder="Password"
             />
           </div>
           
-          <button className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-lg transition-all">
+          <button className="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3.5 rounded-lg transition-all">
             {isLogin ? 'Login' : 'Register'}
           </button>
         </form>
 
-         <div className="mt-8 pt-6 border-t border-slate-800 text-center">
-            <button onClick={() => setPage(PageState.LANDING)} className="text-slate-500 hover:text-white text-xs">
+         <div className="mt-8 pt-6 border-t border-zinc-800 text-center">
+            <button onClick={() => setPage(PageState.LANDING)} className="text-zinc-500 hover:text-white text-xs">
                 &larr; Back
             </button>
         </div>
@@ -581,7 +581,7 @@ const App: React.FC = () => {
       <div className="grid md:grid-cols-2 gap-8">
         
         {/* Payment Methods / QR */}
-        <div className="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-xl">
+        <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 shadow-xl">
            <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
              <QrCode className="text-green-500" />
              Scan to Pay
@@ -590,13 +590,13 @@ const App: React.FC = () => {
            <div className="flex gap-4 mb-6">
               <button 
                 onClick={() => setPaymentMethod('eSewa')}
-                className={`flex-1 py-3 rounded-lg font-bold transition-all ${paymentMethod === 'eSewa' ? 'bg-green-600 text-white ring-2 ring-green-400' : 'bg-slate-900 text-slate-400'}`}
+                className={`flex-1 py-3 rounded-lg font-bold transition-all ${paymentMethod === 'eSewa' ? 'bg-green-600 text-white ring-2 ring-green-400' : 'bg-zinc-950 text-zinc-400 hover:bg-zinc-800'}`}
               >
                 eSewa
               </button>
               <button 
                 onClick={() => setPaymentMethod('Khalti')}
-                className={`flex-1 py-3 rounded-lg font-bold transition-all ${paymentMethod === 'Khalti' ? 'bg-purple-600 text-white ring-2 ring-purple-400' : 'bg-slate-900 text-slate-400'}`}
+                className={`flex-1 py-3 rounded-lg font-bold transition-all ${paymentMethod === 'Khalti' ? 'bg-purple-600 text-white ring-2 ring-purple-400' : 'bg-zinc-950 text-zinc-400 hover:bg-zinc-800'}`}
               >
                 Khalti
               </button>
@@ -613,7 +613,7 @@ const App: React.FC = () => {
               {/* QR Box */}
               <div className="bg-white p-4 rounded-xl shadow-2xl mb-6 w-48 h-48 flex items-center justify-center">
                  {/* CSS Mock QR */}
-                 <div className="w-full h-full bg-slate-900 pattern-grid-lg opacity-80" style={{backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)', backgroundSize: '10px 10px'}}></div>
+                 <div className="w-full h-full bg-zinc-900 pattern-grid-lg opacity-80" style={{backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)', backgroundSize: '10px 10px'}}></div>
               </div>
 
               {/* Details */}
@@ -633,33 +633,33 @@ const App: React.FC = () => {
         </div>
 
         {/* Transaction Form */}
-        <div className="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-xl flex flex-col">
+        <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 shadow-xl flex flex-col">
           <h2 className="text-xl font-bold text-white mb-6">Verify Payment</h2>
-          <p className="text-slate-400 text-sm mb-6">
+          <p className="text-zinc-400 text-sm mb-6">
             After sending money to the QR code, fill this form. Your balance will be added within 5-10 minutes.
           </p>
 
           <form onSubmit={handleSubmitTransaction} className="space-y-4 flex-1">
              <div>
-               <label className="text-xs font-bold text-slate-400 uppercase">Amount (NPR)</label>
+               <label className="text-xs font-bold text-zinc-500 uppercase">Amount (NPR)</label>
                <input 
                  type="number" 
                  required
                  value={depositAmount}
                  onChange={(e) => setDepositAmount(e.target.value)}
-                 className="w-full mt-1 bg-slate-900 border border-slate-600 rounded-lg p-3 text-white focus:border-blue-500 outline-none" 
+                 className="w-full mt-1 bg-zinc-950 border border-zinc-700 rounded-lg p-3 text-white focus:border-brand-500 outline-none transition-all placeholder-zinc-700" 
                  placeholder="e.g. 500"
                />
              </div>
              
              <div>
-               <label className="text-xs font-bold text-slate-400 uppercase">Transaction ID / Remarks</label>
+               <label className="text-xs font-bold text-zinc-500 uppercase">Transaction ID / Remarks</label>
                <input 
                  type="text" 
                  required
                  value={txnId}
                  onChange={(e) => setTxnId(e.target.value)}
-                 className="w-full mt-1 bg-slate-900 border border-slate-600 rounded-lg p-3 text-white focus:border-blue-500 outline-none" 
+                 className="w-full mt-1 bg-zinc-950 border border-zinc-700 rounded-lg p-3 text-white focus:border-brand-500 outline-none transition-all placeholder-zinc-700" 
                  placeholder="e.g. X8J9L0M..."
                />
              </div>
@@ -673,14 +673,14 @@ const App: React.FC = () => {
           </form>
 
           {/* History */}
-          <div className="mt-8 pt-6 border-t border-slate-700">
+          <div className="mt-8 pt-6 border-t border-zinc-800">
              <h4 className="text-white font-bold text-sm mb-4">Your Recent Deposits</h4>
              <div className="space-y-2">
                 {transactions.filter(t => t.userId === user?.id).map(t => (
-                  <div key={t.id} className="bg-slate-900 p-3 rounded-lg flex items-center justify-between text-sm">
+                  <div key={t.id} className="bg-zinc-950 p-3 rounded-lg flex items-center justify-between text-sm border border-zinc-800">
                      <div>
                        <div className="text-white font-bold">Rs. {t.amount}</div>
-                       <div className="text-xs text-slate-500">{t.method} • {t.date}</div>
+                       <div className="text-xs text-zinc-500">{t.method} • {t.date}</div>
                      </div>
                      <span className={`px-2 py-1 rounded text-xs font-bold ${
                        t.status === 'Approved' ? 'text-green-400 bg-green-900/20' : 
@@ -690,7 +690,7 @@ const App: React.FC = () => {
                   </div>
                 ))}
                 {transactions.filter(t => t.userId === user?.id).length === 0 && (
-                  <p className="text-slate-500 text-xs">No transactions yet.</p>
+                  <p className="text-zinc-500 text-xs">No transactions yet.</p>
                 )}
              </div>
           </div>
@@ -700,37 +700,37 @@ const App: React.FC = () => {
   );
 
   const renderAdminDashboard = () => (
-    <div className="bg-slate-800 rounded-xl shadow-xl border border-slate-700 overflow-hidden">
-      <div className="p-6 border-b border-slate-700 flex justify-between items-center bg-red-900/10">
+    <div className="bg-zinc-900 rounded-xl shadow-xl border border-zinc-800 overflow-hidden">
+      <div className="p-6 border-b border-zinc-800 flex justify-between items-center bg-red-950/20">
         <div>
           <h2 className="text-2xl font-bold text-white flex items-center gap-2">
             <Shield className="text-red-500" />
             Admin Dashboard
           </h2>
-          <p className="text-slate-400 text-sm">Manage orders, payments, and services</p>
+          <p className="text-zinc-400 text-sm">Manage orders, payments, and services</p>
         </div>
-        <div className="flex bg-slate-900 rounded-lg p-1 gap-1">
+        <div className="flex bg-zinc-950 rounded-lg p-1 gap-1 border border-zinc-800">
           <button 
             onClick={() => setAdminTab('payments')}
-            className={`px-4 py-2 rounded-md text-sm font-bold transition-all ${adminTab === 'payments' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'}`}
+            className={`px-4 py-2 rounded-md text-sm font-bold transition-all ${adminTab === 'payments' ? 'bg-brand-600 text-white' : 'text-zinc-400 hover:text-white'}`}
           >
             Payments
           </button>
           <button 
             onClick={() => setAdminTab('orders')}
-            className={`px-4 py-2 rounded-md text-sm font-bold transition-all ${adminTab === 'orders' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'}`}
+            className={`px-4 py-2 rounded-md text-sm font-bold transition-all ${adminTab === 'orders' ? 'bg-brand-600 text-white' : 'text-zinc-400 hover:text-white'}`}
           >
             Orders
           </button>
           <button 
             onClick={() => setAdminTab('services')}
-            className={`px-4 py-2 rounded-md text-sm font-bold transition-all ${adminTab === 'services' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'}`}
+            className={`px-4 py-2 rounded-md text-sm font-bold transition-all ${adminTab === 'services' ? 'bg-brand-600 text-white' : 'text-zinc-400 hover:text-white'}`}
           >
             Services
           </button>
           <button 
             onClick={() => setAdminTab('tickets')}
-            className={`px-4 py-2 rounded-md text-sm font-bold transition-all ${adminTab === 'tickets' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'}`}
+            className={`px-4 py-2 rounded-md text-sm font-bold transition-all ${adminTab === 'tickets' ? 'bg-brand-600 text-white' : 'text-zinc-400 hover:text-white'}`}
           >
             Tickets
           </button>
@@ -741,7 +741,7 @@ const App: React.FC = () => {
         {adminTab === 'payments' && (
           <div className="overflow-x-auto">
             <table className="w-full text-left">
-              <thead className="bg-slate-900 text-slate-400 text-xs uppercase font-bold">
+              <thead className="bg-black text-zinc-400 text-xs uppercase font-bold">
                 <tr>
                   <th className="p-4">User</th>
                   <th className="p-4">Amount</th>
@@ -750,20 +750,20 @@ const App: React.FC = () => {
                   <th className="p-4 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-700 text-sm text-slate-300">
+              <tbody className="divide-y divide-zinc-800 text-sm text-zinc-300">
                 {transactions.length === 0 ? (
-                  <tr><td colSpan={5} className="p-8 text-center text-slate-500">No payment requests found.</td></tr>
+                  <tr><td colSpan={5} className="p-8 text-center text-zinc-500">No payment requests found.</td></tr>
                 ) : (
                   transactions.map(t => (
-                    <tr key={t.id} className="hover:bg-slate-700/30">
+                    <tr key={t.id} className="hover:bg-zinc-800/30">
                       <td className="p-4">
                         <div className="text-white font-bold">{t.username}</div>
-                        <div className="text-xs text-slate-500">{t.date}</div>
+                        <div className="text-xs text-zinc-500">{t.date}</div>
                       </td>
                       <td className="p-4 font-mono font-bold text-green-400">Rs. {t.amount}</td>
                       <td className="p-4">
                          <div className="badge badge-outline text-xs mb-1">{t.method}</div>
-                         <div className="font-mono text-xs text-slate-400 select-all">{t.transactionId}</div>
+                         <div className="font-mono text-xs text-zinc-500 select-all">{t.transactionId}</div>
                       </td>
                       <td className="p-4">
                         <span className={`px-2 py-1 rounded text-xs font-bold ${
@@ -795,7 +795,7 @@ const App: React.FC = () => {
         {adminTab === 'orders' && (
           <div className="overflow-x-auto">
              <table className="w-full text-left">
-              <thead className="bg-slate-900 text-slate-400 text-xs uppercase font-bold">
+              <thead className="bg-black text-zinc-400 text-xs uppercase font-bold">
                 <tr>
                   <th className="p-4">ID / User</th>
                   <th className="p-4">Service / Link</th>
@@ -804,23 +804,23 @@ const App: React.FC = () => {
                   <th className="p-4">Refill</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-700 text-sm text-slate-300">
+              <tbody className="divide-y divide-zinc-800 text-sm text-zinc-300">
                 {orders.map(o => (
-                  <tr key={o.id} className="hover:bg-slate-700/30">
+                  <tr key={o.id} className="hover:bg-zinc-800/30">
                      <td className="p-4">
-                        <div className="font-mono text-slate-500 text-xs">{o.id}</div>
+                        <div className="font-mono text-zinc-500 text-xs">{o.id}</div>
                         <div className="text-white font-bold text-xs">{o.username}</div>
                      </td>
                      <td className="p-4 max-w-xs truncate">
                         <div className="text-white text-xs mb-1">{o.serviceName}</div>
-                        <div className="text-blue-400 text-xs font-mono">{o.link}</div>
+                        <div className="text-brand-400 text-xs font-mono">{o.link}</div>
                      </td>
                      <td className="p-4 font-mono">Rs. {o.charge}</td>
                      <td className="p-4">
                        <select 
                          value={o.status}
                          onChange={(e) => handleUpdateOrderStatus(o.id, e.target.value as any)}
-                         className="bg-slate-900 border border-slate-600 rounded text-xs p-1 text-white outline-none"
+                         className="bg-zinc-950 border border-zinc-700 rounded text-xs p-1 text-white outline-none"
                        >
                          <option value="Pending">Pending</option>
                          <option value="Processing">Processing</option>
@@ -835,7 +835,7 @@ const App: React.FC = () => {
                   </tr>
                 ))}
                 {orders.length === 0 && (
-                   <tr><td colSpan={5} className="p-8 text-center text-slate-500">No orders yet.</td></tr>
+                   <tr><td colSpan={5} className="p-8 text-center text-zinc-500">No orders yet.</td></tr>
                 )}
               </tbody>
              </table>
@@ -845,27 +845,27 @@ const App: React.FC = () => {
         {adminTab === 'services' && (
           <div className="p-6">
              {/* API Provider Section */}
-             <div className="bg-slate-900 p-4 rounded-lg border border-slate-700 mb-8">
+             <div className="bg-zinc-950 p-4 rounded-lg border border-zinc-800 mb-8">
                <h3 className="text-white font-bold mb-4 flex items-center gap-2">
-                 <Server className="w-4 h-4 text-blue-400" /> API Provider Integration
+                 <Server className="w-4 h-4 text-brand-400" /> API Provider Integration
                </h3>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                  <div>
-                    <label className="text-xs text-slate-500 uppercase font-bold">Provider API URL</label>
+                    <label className="text-xs text-zinc-500 uppercase font-bold">Provider API URL</label>
                     <input 
                       value={providerUrl}
                       onChange={(e) => setProviderUrl(e.target.value)}
-                      className="w-full bg-slate-800 border border-slate-600 p-2 rounded text-sm text-white mt-1"
+                      className="w-full bg-zinc-900 border border-zinc-700 p-2 rounded text-sm text-white mt-1"
                       placeholder="https://justanotherpanel.com/api/v2"
                     />
                  </div>
                  <div>
-                    <label className="text-xs text-slate-500 uppercase font-bold">API Key</label>
+                    <label className="text-xs text-zinc-500 uppercase font-bold">API Key</label>
                     <input 
                       type="password"
                       value={providerKey}
                       onChange={(e) => setProviderKey(e.target.value)}
-                      className="w-full bg-slate-800 border border-slate-600 p-2 rounded text-sm text-white mt-1"
+                      className="w-full bg-zinc-900 border border-zinc-700 p-2 rounded text-sm text-white mt-1"
                       placeholder="Enter Provider API Key"
                     />
                  </div>
@@ -873,14 +873,14 @@ const App: React.FC = () => {
                <button 
                   onClick={handleSyncProvider}
                   disabled={isSyncing}
-                  className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded text-sm flex items-center gap-2"
+                  className="bg-brand-600 hover:bg-brand-500 text-white font-bold py-2 px-4 rounded text-sm flex items-center gap-2"
                >
                  <RefreshCw className={`w-4 h-4 ${isSyncing ? 'animate-spin' : ''}`} />
                  {isSyncing ? 'Syncing...' : 'Sync Services from Provider'}
                </button>
              </div>
 
-             <div className="bg-slate-900 p-4 rounded-lg border border-slate-700 mb-8">
+             <div className="bg-zinc-950 p-4 rounded-lg border border-zinc-800 mb-8">
                <h3 className="text-white font-bold mb-4 flex items-center gap-2">
                  <Plus className="w-4 h-4" /> Add Manual Service
                </h3>
@@ -889,32 +889,32 @@ const App: React.FC = () => {
                     placeholder="Category (e.g. Telegram)" 
                     value={newServiceCategory} 
                     onChange={e => setNewServiceCategory(e.target.value)}
-                    className="bg-slate-800 border border-slate-600 p-2 rounded text-sm text-white"
+                    className="bg-zinc-900 border border-zinc-700 p-2 rounded text-sm text-white"
                   />
                   <input 
                     placeholder="Service Name" 
                     value={newServiceName} 
                     onChange={e => setNewServiceName(e.target.value)}
-                    className="bg-slate-800 border border-slate-600 p-2 rounded text-sm text-white"
+                    className="bg-zinc-900 border border-zinc-700 p-2 rounded text-sm text-white"
                   />
                   <input 
                     type="number" placeholder="Rate (Rs.)" 
                     value={newServiceRate} 
                     onChange={e => setNewServiceRate(e.target.value)}
-                    className="bg-slate-800 border border-slate-600 p-2 rounded text-sm text-white"
+                    className="bg-zinc-900 border border-zinc-700 p-2 rounded text-sm text-white"
                   />
                   <div className="flex gap-2">
                     <input 
                       type="number" placeholder="Min" 
                       value={newServiceMin} 
                       onChange={e => setNewServiceMin(e.target.value)}
-                      className="bg-slate-800 border border-slate-600 p-2 rounded text-sm text-white w-1/2"
+                      className="bg-zinc-900 border border-zinc-700 p-2 rounded text-sm text-white w-1/2"
                     />
                     <input 
                       type="number" placeholder="Max" 
                       value={newServiceMax} 
                       onChange={e => setNewServiceMax(e.target.value)}
-                      className="bg-slate-800 border border-slate-600 p-2 rounded text-sm text-white w-1/2"
+                      className="bg-zinc-900 border border-zinc-700 p-2 rounded text-sm text-white w-1/2"
                     />
                   </div>
                   <button className="bg-green-600 hover:bg-green-500 text-white font-bold rounded text-sm">Add Service</button>
@@ -922,9 +922,9 @@ const App: React.FC = () => {
              </div>
 
              <h3 className="text-white font-bold mb-4">Current Services ({services.length})</h3>
-             <div className="overflow-x-auto rounded-lg border border-slate-700">
-               <table className="w-full text-left bg-slate-900/50">
-                 <thead className="bg-slate-900 text-slate-400 text-xs uppercase font-bold">
+             <div className="overflow-x-auto rounded-lg border border-zinc-800">
+               <table className="w-full text-left bg-zinc-950/50">
+                 <thead className="bg-black text-zinc-400 text-xs uppercase font-bold">
                    <tr>
                      <th className="p-3">Icon</th>
                      <th className="p-3">Category</th>
@@ -933,9 +933,9 @@ const App: React.FC = () => {
                      <th className="p-3 text-right">Action</th>
                    </tr>
                  </thead>
-                 <tbody className="divide-y divide-slate-700 text-sm">
+                 <tbody className="divide-y divide-zinc-800 text-sm">
                    {services.map(s => (
-                     <tr key={s.id} className="text-slate-300">
+                     <tr key={s.id} className="text-zinc-300">
                        <td className="p-3">{getPlatformIcon(s.category)}</td>
                        <td className="p-3 font-medium">{s.category}</td>
                        <td className="p-3">{s.name}</td>
@@ -956,7 +956,7 @@ const App: React.FC = () => {
         {adminTab === 'tickets' && (
           <div className="overflow-x-auto">
             <table className="w-full text-left">
-              <thead className="bg-slate-900 text-slate-400 text-xs uppercase font-bold">
+              <thead className="bg-black text-zinc-400 text-xs uppercase font-bold">
                 <tr>
                   <th className="p-4">ID</th>
                   <th className="p-4">User</th>
@@ -966,22 +966,22 @@ const App: React.FC = () => {
                   <th className="p-4 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-700 text-sm text-slate-300">
+              <tbody className="divide-y divide-zinc-800 text-sm text-zinc-300">
                 {tickets.length === 0 ? (
-                   <tr><td colSpan={6} className="p-8 text-center text-slate-500">No support tickets.</td></tr>
+                   <tr><td colSpan={6} className="p-8 text-center text-zinc-500">No support tickets.</td></tr>
                 ) : (
                    tickets.map(t => (
-                     <tr key={t.id} className="hover:bg-slate-700/30">
-                        <td className="p-4 font-mono text-slate-500">{t.id}</td>
+                     <tr key={t.id} className="hover:bg-zinc-800/30">
+                        <td className="p-4 font-mono text-zinc-500">{t.id}</td>
                         <td className="p-4 font-bold text-white">{t.username}</td>
                         <td className="p-4">
-                          <span className="text-xs font-bold uppercase bg-slate-800 px-2 py-1 rounded text-slate-400 mr-2">{t.type}</span>
+                          <span className="text-xs font-bold uppercase bg-zinc-800 px-2 py-1 rounded text-zinc-400 mr-2">{t.type}</span>
                           {t.subject}
                         </td>
-                        <td className="p-4 text-slate-400 max-w-md truncate">{t.message}</td>
+                        <td className="p-4 text-zinc-400 max-w-md truncate">{t.message}</td>
                         <td className="p-4">
                            <span className={`px-2 py-1 rounded text-xs font-bold ${
-                              t.status === 'Open' ? 'text-green-400 bg-green-900/20' : 'text-slate-400 bg-slate-800'
+                              t.status === 'Open' ? 'text-green-400 bg-green-900/20' : 'text-zinc-400 bg-zinc-800'
                            }`}>{t.status}</span>
                         </td>
                         <td className="p-4 text-right">
@@ -1018,23 +1018,23 @@ const App: React.FC = () => {
       
       case 'mass-order':
         return (
-           <div className="bg-slate-800 rounded-xl shadow-xl border border-slate-700 p-6">
-              <div className="flex items-center gap-2 mb-6 border-b border-slate-700 pb-4">
-                 <Layers className="text-blue-400" />
+           <div className="bg-zinc-900 rounded-xl shadow-xl border border-zinc-800 p-6">
+              <div className="flex items-center gap-2 mb-6 border-b border-zinc-800 pb-4">
+                 <Layers className="text-brand-400" />
                  <h2 className="text-xl font-bold text-white">Mass Order</h2>
               </div>
-              <p className="text-slate-400 text-sm mb-4">
-                 One order per line in format: <span className="font-mono bg-slate-900 px-2 py-1 rounded text-white">service_id | link | quantity</span>
+              <p className="text-zinc-400 text-sm mb-4">
+                 One order per line in format: <span className="font-mono bg-zinc-950 px-2 py-1 rounded text-white border border-zinc-800">service_id | link | quantity</span>
               </p>
               <textarea 
-                className="w-full h-64 bg-slate-900 border border-slate-700 rounded-lg p-4 text-white font-mono text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none"
+                className="w-full h-64 bg-zinc-950 border border-zinc-700 rounded-lg p-4 text-white font-mono text-sm focus:ring-2 focus:ring-brand-500 outline-none resize-none"
                 placeholder={`101 | https://instagram.com/user | 1000\n102 | https://tiktok.com/@user | 500`}
                 value={massOrderContent}
                 onChange={(e) => setMassOrderContent(e.target.value)}
               />
               <button 
                 onClick={handleMassOrder}
-                className="mt-4 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-6 rounded-lg transition-all"
+                className="mt-4 bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 px-6 rounded-lg transition-all"
               >
                  Submit Mass Order
               </button>
@@ -1043,16 +1043,16 @@ const App: React.FC = () => {
 
       case 'orders':
         return (
-          <div className="bg-slate-800 rounded-xl shadow-xl border border-slate-700 overflow-hidden">
-            <div className="p-6 border-b border-slate-700 flex justify-between items-center">
+          <div className="bg-zinc-900 rounded-xl shadow-xl border border-zinc-800 overflow-hidden">
+            <div className="p-6 border-b border-zinc-800 flex justify-between items-center">
               <h2 className="text-xl font-bold text-white">Order History</h2>
-              <div className="bg-slate-900 px-3 py-1 rounded-md border border-slate-700 text-xs text-slate-400">
+              <div className="bg-zinc-950 px-3 py-1 rounded-md border border-zinc-800 text-xs text-zinc-400">
                  Total Orders: {orders.filter(o => o.userId === user?.id).length}
               </div>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left">
-                <thead className="bg-slate-900 text-slate-400 text-xs uppercase font-bold tracking-wider">
+                <thead className="bg-black text-zinc-400 text-xs uppercase font-bold tracking-wider">
                   <tr>
                     <th className="p-4">ID</th>
                     <th className="p-4">Date</th>
@@ -1063,10 +1063,10 @@ const App: React.FC = () => {
                     <th className="p-4">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-700 text-sm text-slate-300">
+                <tbody className="divide-y divide-zinc-800 text-sm text-zinc-300">
                   {orders.filter(o => o.userId === user?.id).length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="p-12 text-center text-slate-500">
+                      <td colSpan={7} className="p-12 text-center text-zinc-500">
                         <div className="flex flex-col items-center">
                            <ShoppingBag className="w-12 h-12 mb-4 opacity-20" />
                            <p>No orders found. Place your first order!</p>
@@ -1075,12 +1075,12 @@ const App: React.FC = () => {
                     </tr>
                   ) : (
                     orders.filter(o => o.userId === user?.id).map(order => (
-                      <tr key={order.id} className="hover:bg-slate-700/50 transition-colors">
-                        <td className="p-4 font-mono text-slate-500">{order.id}</td>
+                      <tr key={order.id} className="hover:bg-zinc-800/50 transition-colors">
+                        <td className="p-4 font-mono text-zinc-500">{order.id}</td>
                         <td className="p-4">{order.date}</td>
                         <td className="p-4 max-w-xs truncate">{order.serviceName}</td>
-                        <td className="p-4 max-w-xs truncate font-mono text-blue-400 bg-blue-900/10 p-1 rounded inline-block">{order.link}</td>
-                        <td className="p-4 font-bold">Rs. {order.charge.toFixed(2)}</td>
+                        <td className="p-4 max-w-xs truncate font-mono text-brand-400 bg-brand-900/10 p-1 rounded inline-block">{order.link}</td>
+                        <td className="p-4 font-bold text-zinc-100">Rs. {order.charge.toFixed(2)}</td>
                         <td className="p-4">
                           <span className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${
                             order.status === 'Completed' ? 'bg-green-900/50 text-green-300 border border-green-800' :
@@ -1096,8 +1096,8 @@ const App: React.FC = () => {
                                 <button 
                                   onClick={() => handleRefillOrder(order.id)}
                                   disabled={order.refillStatus === 'Pending' || order.refillStatus === 'Completed'}
-                                  className={`text-xs px-2 py-1 rounded border ${
-                                     order.refillStatus ? 'border-slate-600 text-slate-500 cursor-not-allowed' : 'border-blue-500 text-blue-400 hover:bg-blue-900/30'
+                                  className={`text-xs px-2 py-1 rounded border transition-colors ${
+                                     order.refillStatus ? 'border-zinc-700 text-zinc-600 cursor-not-allowed' : 'border-brand-500 text-brand-400 hover:bg-brand-900/30'
                                   }`}
                                 >
                                   {order.refillStatus === 'Pending' ? 'Refill Pending' : 
@@ -1116,23 +1116,23 @@ const App: React.FC = () => {
 
       case 'services':
         return (
-          <div className="bg-slate-800 rounded-xl shadow-xl border border-slate-700 overflow-hidden">
-            <div className="p-6 border-b border-slate-700 flex justify-between items-center">
+          <div className="bg-zinc-900 rounded-xl shadow-xl border border-zinc-800 overflow-hidden">
+            <div className="p-6 border-b border-zinc-800 flex justify-between items-center">
                 <h2 className="text-xl font-bold text-white">Service List</h2>
                 <div className="relative">
                    <input 
                      type="text" 
                      placeholder="Search services..." 
-                     className="bg-slate-900 border border-slate-600 rounded-full py-1 px-4 pl-10 text-sm text-white focus:ring-2 focus:ring-blue-500 outline-none w-64"
+                     className="bg-zinc-950 border border-zinc-700 rounded-full py-2 px-4 pl-10 text-sm text-white focus:ring-2 focus:ring-brand-500 outline-none w-64 transition-all"
                      value={serviceSearch}
                      onChange={(e) => setServiceSearch(e.target.value)}
                    />
-                   <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2" />
+                   <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-2.5" />
                 </div>
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-left">
-                    <thead className="bg-slate-900 text-slate-400 text-xs uppercase font-bold tracking-wider">
+                    <thead className="bg-black text-zinc-400 text-xs uppercase font-bold tracking-wider">
                         <tr>
                             <th className="p-4">Icon</th>
                             <th className="p-4">ID</th>
@@ -1141,16 +1141,16 @@ const App: React.FC = () => {
                             <th className="p-4">Min / Max</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-700 text-sm text-slate-300">
+                    <tbody className="divide-y divide-zinc-800 text-sm text-zinc-300">
                         {services
                           .filter(s => s.name.toLowerCase().includes(serviceSearch.toLowerCase()) || s.category.toLowerCase().includes(serviceSearch.toLowerCase()))
                           .map(svc => (
-                            <tr key={svc.id} className="hover:bg-slate-700/50">
+                            <tr key={svc.id} className="hover:bg-zinc-800/50 transition-colors">
                                 <td className="p-4">{getPlatformIcon(svc.category)}</td>
-                                <td className="p-4 font-mono text-slate-500">{svc.id}</td>
+                                <td className="p-4 font-mono text-zinc-500">{svc.id}</td>
                                 <td className="p-4 font-medium">{svc.name}</td>
                                 <td className="p-4 font-bold text-green-400 bg-green-900/10 w-32 rounded">Rs. {svc.rate.toFixed(2)}</td>
-                                <td className="p-4 text-slate-400">{svc.min} / {svc.max}</td>
+                                <td className="p-4 text-zinc-500">{svc.min} / {svc.max}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -1162,16 +1162,16 @@ const App: React.FC = () => {
       case 'tickets':
          return (
              <div className="grid lg:grid-cols-3 gap-6">
-                 <div className="lg:col-span-1 bg-slate-800 rounded-xl shadow-xl border border-slate-700 p-6">
-                     <div className="flex items-center gap-2 mb-6 border-b border-slate-700 pb-4">
-                        <MessageSquare className="text-blue-400" />
+                 <div className="lg:col-span-1 bg-zinc-900 rounded-xl shadow-xl border border-zinc-800 p-6">
+                     <div className="flex items-center gap-2 mb-6 border-b border-zinc-800 pb-4">
+                        <MessageSquare className="text-brand-400" />
                         <h2 className="text-xl font-bold text-white">New Ticket</h2>
                      </div>
                      <form onSubmit={handleSubmitTicket} className="space-y-4">
                         <div>
-                           <label className="text-xs text-slate-400 font-bold uppercase mb-1 block">Subject</label>
+                           <label className="text-xs text-zinc-500 font-bold uppercase mb-1 block">Subject Type</label>
                            <select 
-                             className="w-full bg-slate-900 border border-slate-600 rounded p-2 text-white text-sm outline-none"
+                             className="w-full bg-zinc-950 border border-zinc-700 rounded p-2 text-white text-sm outline-none focus:border-brand-500"
                              value={ticketType}
                              onChange={(e) => setTicketType(e.target.value as any)}
                            >
@@ -1181,48 +1181,48 @@ const App: React.FC = () => {
                            </select>
                         </div>
                         <div>
-                           <label className="text-xs text-slate-400 font-bold uppercase mb-1 block">Subject</label>
+                           <label className="text-xs text-zinc-500 font-bold uppercase mb-1 block">Subject Title</label>
                            <input 
                              type="text" 
-                             className="w-full bg-slate-900 border border-slate-600 rounded p-2 text-white text-sm outline-none"
+                             className="w-full bg-zinc-950 border border-zinc-700 rounded p-2 text-white text-sm outline-none focus:border-brand-500"
                              placeholder="e.g. Order not started"
                              value={ticketSubject}
                              onChange={(e) => setTicketSubject(e.target.value)}
                            />
                         </div>
                         <div>
-                           <label className="text-xs text-slate-400 font-bold uppercase mb-1 block">Message</label>
+                           <label className="text-xs text-zinc-500 font-bold uppercase mb-1 block">Message</label>
                            <textarea 
-                             className="w-full h-32 bg-slate-900 border border-slate-600 rounded p-2 text-white text-sm outline-none resize-none"
+                             className="w-full h-32 bg-zinc-950 border border-zinc-700 rounded p-2 text-white text-sm outline-none resize-none focus:border-brand-500"
                              placeholder="Describe your issue..."
                              value={ticketMessage}
                              onChange={(e) => setTicketMessage(e.target.value)}
                            />
                         </div>
-                        <button className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 rounded transition-colors">
+                        <button className="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-2 rounded transition-colors shadow-lg">
                            Submit Ticket
                         </button>
                      </form>
                  </div>
 
-                 <div className="lg:col-span-2 bg-slate-800 rounded-xl shadow-xl border border-slate-700 p-6">
+                 <div className="lg:col-span-2 bg-zinc-900 rounded-xl shadow-xl border border-zinc-800 p-6">
                      <h2 className="text-xl font-bold text-white mb-6">Your Tickets</h2>
                      <div className="space-y-4">
                         {tickets.filter(t => t.userId === user?.id).length === 0 ? (
-                           <div className="text-center text-slate-500 py-10">No tickets found.</div>
+                           <div className="text-center text-zinc-500 py-10">No tickets found.</div>
                         ) : (
                            tickets.filter(t => t.userId === user?.id).map(t => (
-                              <div key={t.id} className="bg-slate-900 border border-slate-700 rounded-lg p-4">
+                              <div key={t.id} className="bg-zinc-950 border border-zinc-800 rounded-lg p-4">
                                   <div className="flex justify-between items-start mb-2">
                                      <div>
                                         <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded ${
-                                           t.status === 'Open' ? 'bg-green-900 text-green-400' : 'bg-slate-700 text-slate-400'
+                                           t.status === 'Open' ? 'bg-green-900/30 text-green-400' : 'bg-zinc-800 text-zinc-500'
                                         }`}>{t.status}</span>
                                         <h4 className="text-white font-bold mt-1">{t.subject}</h4>
                                      </div>
-                                     <span className="text-xs text-slate-500">{t.date}</span>
+                                     <span className="text-xs text-zinc-500">{t.date}</span>
                                   </div>
-                                  <p className="text-slate-400 text-sm">{t.message}</p>
+                                  <p className="text-zinc-400 text-sm">{t.message}</p>
                               </div>
                            ))
                         )}
@@ -1237,27 +1237,27 @@ const App: React.FC = () => {
       case 'support':
         return (
             <div className="max-w-xl mx-auto text-center pt-8">
-                 <div className="bg-slate-800 rounded-2xl shadow-xl border border-slate-700 p-10 relative overflow-hidden">
+                 <div className="bg-zinc-900 rounded-2xl shadow-xl border border-zinc-800 p-10 relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-green-500 to-emerald-500"></div>
-                    <div className="w-20 h-20 bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <div className="w-20 h-20 bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
                         <MessageCircle className="w-10 h-10 text-green-500" />
                     </div>
                     <h2 className="text-3xl font-bold text-white mb-2">WhatsApp Support</h2>
-                    <p className="text-slate-400 mb-8">
+                    <p className="text-zinc-400 mb-8">
                       For fastest response, please contact {OWNER_NAME} directly on WhatsApp.
                     </p>
                     
                     <button 
                         onClick={() => window.open(`https://wa.me/${SUPPORT_PHONE}`, '_blank')}
-                        className="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg shadow-green-900/40 flex items-center justify-center gap-3 text-lg"
+                        className="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg shadow-green-900/20 flex items-center justify-center gap-3 text-lg"
                     >
                         <MessageCircle className="w-6 h-6 fill-current" />
                         Chat on WhatsApp
                     </button>
                     
-                    <div className="mt-8 pt-6 border-t border-slate-700">
-                       <p className="text-slate-500 text-sm font-mono">{SUPPORT_PHONE}</p>
-                       <p className="text-slate-600 text-xs mt-1">Available 10AM - 10PM</p>
+                    <div className="mt-8 pt-6 border-t border-zinc-800">
+                       <p className="text-zinc-500 text-sm font-mono">{SUPPORT_PHONE}</p>
+                       <p className="text-zinc-600 text-xs mt-1">Available 10AM - 10PM</p>
                     </div>
                  </div>
             </div>

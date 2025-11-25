@@ -47,21 +47,21 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   }
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full">
-      <div className="p-6 border-b border-slate-800">
+    <div className="flex flex-col h-full bg-zinc-950">
+      <div className="p-6 border-b border-zinc-800">
         <Logo />
-        {user.role === 'admin' && <span className="text-xs text-red-400 font-bold uppercase tracking-widest ml-1">Admin Mode</span>}
+        {user.role === 'admin' && <span className="text-xs text-red-500 font-bold uppercase tracking-widest ml-1 drop-shadow-sm">Admin Mode</span>}
       </div>
       
       <div className="p-4">
-        <div className="bg-slate-800 rounded-lg p-4 mb-6 border border-slate-700">
+        <div className="bg-zinc-900 rounded-lg p-4 mb-6 border border-zinc-800 shadow-sm">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-500 to-indigo-600 flex items-center justify-center text-white font-bold shadow-lg shadow-brand-900/20">
               {user.username[0].toUpperCase()}
             </div>
             <div>
               <div className="text-white font-medium">{user.username}</div>
-              <div className="text-green-400 font-mono text-sm">Rs. {user.balance.toFixed(2)}</div>
+              <div className="text-emerald-400 font-mono text-sm font-semibold">Rs. {user.balance.toFixed(2)}</div>
             </div>
           </div>
         </div>
@@ -77,13 +77,13 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                   setActiveTab(item.id);
                   setMobileMenuOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
                   isActive 
-                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50' 
-                    : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                    ? 'bg-brand-600/10 text-brand-400 border border-brand-600/20' 
+                    : 'text-zinc-400 hover:bg-zinc-900 hover:text-white hover:border-transparent'
                 }`}
               >
-                <Icon className="w-5 h-5" />
+                <Icon className={`w-5 h-5 ${isActive ? 'text-brand-400' : 'text-zinc-500'}`} />
                 {item.label}
               </button>
             );
@@ -91,10 +91,10 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
         </nav>
       </div>
 
-      <div className="mt-auto p-4 border-t border-slate-800">
+      <div className="mt-auto p-4 border-t border-zinc-800">
         <button 
           onClick={onLogout}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-red-400 hover:bg-red-900/20 transition-colors"
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-zinc-400 hover:text-red-400 hover:bg-red-950/20 transition-colors"
         >
           <LogOut className="w-5 h-5" />
           Logout
@@ -104,14 +104,14 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   );
 
   return (
-    <div className="min-h-screen bg-slate-900 flex">
+    <div className="min-h-screen bg-black flex font-sans">
       {/* Desktop Sidebar */}
-      <aside className="hidden md:block w-64 bg-slate-900 border-r border-slate-800 h-screen sticky top-0">
+      <aside className="hidden md:block w-64 bg-zinc-950 border-r border-zinc-800 h-screen sticky top-0">
         <SidebarContent />
       </aside>
 
       {/* Mobile Header */}
-      <div className="md:hidden fixed top-0 w-full bg-slate-900/90 backdrop-blur-md border-b border-slate-800 z-50 p-4 flex items-center justify-between">
+      <div className="md:hidden fixed top-0 w-full bg-black/90 backdrop-blur-md border-b border-zinc-800 z-50 p-4 flex items-center justify-between">
         <Logo />
         <button onClick={() => setMobileMenuOpen(true)} className="text-white">
           <Menu />
@@ -122,13 +122,13 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 md:hidden flex">
           <div 
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm"
             onClick={() => setMobileMenuOpen(false)}
           />
-          <div className="relative bg-slate-900 w-4/5 max-w-xs h-full shadow-2xl animate-in slide-in-from-left duration-200">
+          <div className="relative bg-zinc-950 w-4/5 max-w-xs h-full shadow-2xl border-r border-zinc-800 animate-in slide-in-from-left duration-200">
             <button 
               onClick={() => setMobileMenuOpen(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white"
+              className="absolute top-4 right-4 text-zinc-400 hover:text-white"
             >
               <X />
             </button>
@@ -138,8 +138,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
       )}
 
       {/* Main Content */}
-      <main className="flex-1 p-4 md:p-8 mt-16 md:mt-0 overflow-y-auto h-screen">
-        <div className="max-w-5xl mx-auto">
+      <main className="flex-1 p-4 md:p-8 mt-16 md:mt-0 overflow-y-auto h-screen bg-black">
+        <div className="max-w-6xl mx-auto">
           {children}
         </div>
       </main>
