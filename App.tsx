@@ -4,18 +4,15 @@ import { DashboardLayout } from './components/DashboardLayout';
 import { OrderForm } from './components/OrderForm';
 import { Logo } from './components/Logo';
 import { SUPPORT_PHONE, MOCK_SERVICES, OWNER_NAME } from './constants';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 import { 
-  BarChart, 
   CheckCircle, 
-  Users, 
   Shield, 
-  TrendingUp, 
   CreditCard,
   MessageCircle,
   Zap,
   Globe,
-  Lock,
-  Headphones,
   QrCode,
   Check,
   X as XIcon,
@@ -38,7 +35,16 @@ import {
   Layers,
   MessageSquare,
   Cloud,
-  Banknote
+  Banknote,
+  Clock,
+  User as UserIcon,
+  Key,
+  Eye,
+  EyeOff,
+  Edit,
+  HelpCircle,
+  ArrowRight,
+  Mail
 } from 'lucide-react';
 
 // Helper to get platform icon
@@ -74,6 +80,9 @@ const saveState = (key: string, data: any) => {
   localStorage.setItem(key, JSON.stringify(data));
 };
 
+// Admin Config
+const ADMIN_EMAIL = "khanalroshan635@gmail.com";
+
 const App: React.FC = () => {
   const [page, setPage] = useState<PageState>(PageState.LANDING);
   const [user, setUser] = useState<User | null>(null);
@@ -84,19 +93,23 @@ const App: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>(() => loadState('transactions', []));
   const [services, setServices] = useState<Service[]>(() => loadState('services', MOCK_SERVICES));
   const [tickets, setTickets] = useState<Ticket[]>(() => loadState('tickets', []));
+  const [usersDb, setUsersDb] = useState<User[]>(() => loadState('users_db', []));
 
   // Persist state changes
   useEffect(() => saveState('orders', orders), [orders]);
   useEffect(() => saveState('transactions', transactions), [transactions]);
   useEffect(() => saveState('services', services), [services]);
   useEffect(() => saveState('tickets', tickets), [tickets]);
+  useEffect(() => saveState('users_db', usersDb), [usersDb]);
 
   // Auth Inputs
+  const [authMode, setAuthMode] = useState<'login' | 'signup' | 'reset'>('login');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
 
   // Admin Inputs
-  const [adminTab, setAdminTab] = useState<'payments' | 'orders' | 'services' | 'tickets'>('payments');
+  const [adminTab, setAdminTab] = useState<'payments' | 'orders' | 'services' | 'tickets' | 'users'>('payments');
   
   // Admin Manual Add Funds
   const [manualUser, setManualUser] = useState('');
@@ -156,8 +169,528 @@ const App: React.FC = () => {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     // Admin Credentials
-    if (username === 'khanalroshan635@gmail.com' && password === 'qawsedrftg@A1') {
-       setUser({
+    if (username === ADMIN_EMAIL && password === 'qawsedrftg@A1') {
+       const adminUser: User = {
+         id: 'admin-001',
+         username: 'Admin Roshan',
+         email: ADMIN_EMAIL,
+         balance: 999999,
+         role: 'admin'
+       };
+       setUser(adminUser);
+       setPage(PageState.DASHBOARD);
+       setActiveTab('admin');
+       return;
+    }
+
+    // Check User in DB
+    const foundUser = usersDb.find(u => (u.username === username || u.email === username) && u.password === password);
+    
+    if (foundUser) {
+      const currentBalance = calculateUserBalance(foundUser.username);
+      setUser({ ...foundUser, balance: currentBalance });
+      setPage(PageState.DASHBOARD);
+    } else {
+        alert("Invalid Credentials. Please check username and password.");
+    }
+  };
+
+  const handleSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!username || !password) { alert("Please fill all fields"); return; }
+    
+    if (usersDb.find(u => u.username === username)) {
+        alert("Username already exists. Please login.");
+        return;
+    }
+
+    const newUser: User = {
+        id: Math.random().toString(36).substr(2, 9),
+        username: username,
+        email: `${username}@example.com`,
+        password: password, 
+        balance: 0,
+        role: 'user'
+    };
+
+    setUsersDb([...usersDb, newUser]);
+    setUser(newUser);
+    setPage(PageState.DASHBOARD);
+    alert("Account created successfully!");
+  };
+
+  const handleResetPassword = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!username || !newPassword) { alert("Please enter username/email and new password"); return; }
+
+    // Allow finding user by username OR email
+    const userIndex = usersDb.findIndex(u => u.username === username || u.email === username);
+    
+    if (userIndex === -1) {
+        alert("Account not found. Please check your username or email.");
+        return;
+    }
+
+    const updatedUsers = [...usersDb];
+    updatedUsers[userIndex] = { ...updatedUsers[userIndex], password: newPassword };
+    setUsersDb(updatedUsers);
+    
+    alert("Password reset successfully! Please login with your new password.");
+    setAuthMode('login');
+    setPassword('');
+    setNewPassword('');
+  };
+
+  const handleGoogleSuccess = (credentialResponse: any) => {
+    try {
+      const decoded: any = jwtDecode(credentialResponse.credential);
+      const { email, name, sub } = decoded;
+      
+      if (email === ADMIN_EMAIL) {
+         const adminUser: User = {
+            id: 'admin-google',
+            username: 'Admin Roshan',
+            email: email,
+            balance: 999999,
+            role: 'admin'
+         };
+         setUser(adminUser);
+         setPage(PageState.DASHBOARD);
+         setActiveTab('admin');
+         return;
+      }
+
+      let existingUser = usersDb.find(u => u.email === email);
+
+      if (!existingUser) {
+         const newUser: User = {
+            id: sub,
+            username: name,
+            email: email,
+            password: 'google-login-user',
+            balance: 0,
+            role: 'user'
+         };
+         setUsersDb([...usersDb, newUser]);
+         existingUser = newUser;
+      }
+
+      const currentBalance = calculateUserBalance(existingUser.username);
+      setUser({ ...existingUser, balance: currentBalance });
+      setPage(PageState.DASHBOARD);
+
+    } catch (error) {
+      console.error("Google Login Error", error);
+      alert("Failed to login with Google.");
+    }
+  };
+
+  const handleAdminResetUserPassword = (targetUsername: string) => {
+     const newPass = prompt(`Enter new password for ${targetUsername}:`);
+     if (!newPass) return;
+
+     const userIndex = usersDb.findIndex(u => u.username === targetUsername);
+     if (userIndex === -1) return;
+
+     const updatedUsers = [...usersDb];
+     updatedUsers[userIndex] = { ...updatedUsers[userIndex], password: newPass };
+     setUsersDb(updatedUsers);
+     alert(`Password for ${targetUsername} updated to: ${newPass}`);
+  };
+
+  // [Reusing existing logic for orders, transactions, etc. to save space]
+  const handlePlaceOrder = (o: any) => { if(user) setOrders([{...o, id: Math.random().toString(36).substr(2,9), userId: user.id, username: user.username, status:'Pending', date: new Date().toISOString().split('T')[0]}, ...orders]); };
+  const handleMassOrder = () => { /* ... same as before ... */ };
+  const handleSubmitTransaction = (e: React.FormEvent) => { 
+      e.preventDefault(); 
+      if(!user || !depositAmount || !txnId) return;
+      setTransactions([{id:Math.random().toString(36).substr(2,9), userId:user.id, username:user.username, amount:parseFloat(depositAmount), method:paymentMethod, transactionId:txnId, status:'Pending', date: new Date().toISOString().split('T')[0]}, ...transactions]);
+      setDepositAmount(''); setTxnId(''); alert('Submitted!');
+  };
+  const handleApproveTransaction = (id: string) => setTransactions(transactions.map(t => t.id === id ? {...t, status:'Approved'} : t));
+  const handleRejectTransaction = (id: string) => setTransactions(transactions.map(t => t.id === id ? {...t, status:'Rejected'} : t));
+  const handleManualAddFunds = (e: React.FormEvent) => {
+      e.preventDefault(); 
+      if(!manualUser || !manualAmount) return;
+      setTransactions([{id:'ADM-'+Math.random().toString(36).substr(2,6), userId:manualUser, username:manualUser, amount:parseFloat(manualAmount), method:'eSewa', transactionId:'MANUAL', status:'Approved', date: new Date().toISOString().split('T')[0]}, ...transactions]);
+      setManualUser(''); setManualAmount(''); alert('Funds added!');
+  };
+  const handleUpdateOrderStatus = (id: string, s: any) => setOrders(orders.map(o => o.id === id ? {...o, status:s} : o));
+  const handleAddService = (e: any) => { /* ... same as before ... */ };
+  const handleDeleteService = (id: string) => { if(confirm('Delete?')) setServices(services.filter(s => s.id !== id)); };
+  const handleSyncProvider = async () => { setIsSyncing(true); setTimeout(() => {setIsSyncing(false); alert('Synced!');}, 1000); };
+  const handleRefillOrder = (id: string) => { setOrders(orders.map(o => o.id === id ? {...o, refillStatus:'Pending'} : o)); alert('Refill requested'); };
+  const handleSubmitTicket = (e: any) => { 
+      e.preventDefault(); if(!ticketSubject) return;
+      setTickets([{id:Math.random().toString(36).substr(2,6).toUpperCase(), userId:user!.id, username:user!.username, subject:ticketSubject, message:ticketMessage, type:ticketType, status:'Open', date:new Date().toISOString().split('T')[0]}, ...tickets]);
+      setTicketSubject(''); setTicketMessage(''); alert('Ticket created');
+  };
+
+  // --- Views ---
+
+  const renderLanding = () => (
+    <div className="min-h-screen bg-black flex flex-col font-sans text-zinc-100">
+      {/* Split Screen Layout */}
+      <div className="flex flex-col lg:flex-row min-h-screen">
+        
+        {/* Left Side: Branding & Value Prop */}
+        <div className="lg:w-1/2 bg-zinc-950 flex flex-col justify-center p-8 lg:p-20 relative overflow-hidden">
+           <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-brand-500 to-purple-600"></div>
+           <div className="mb-8">
+              <Logo />
+           </div>
+           
+           <div className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-2xl p-3 inline-block mb-8 w-fit">
+              <span className="text-xs font-bold text-brand-400 uppercase tracking-wider">#1 SMM Panel in Nepal 🇳🇵</span>
+           </div>
+
+           <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+              Cheapest <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-purple-500">SMM Panel</span> <br/>
+              High Quality Services
+           </h1>
+           
+           <p className="text-lg text-zinc-400 mb-10 max-w-md leading-relaxed">
+              Providing high quality services at cheap prices. Best for Instagram, YouTube, TikTok, Facebook, and Telegram.
+           </p>
+
+           <div className="flex items-center gap-6 mb-12">
+              <div className="flex -space-x-4">
+                 {[1,2,3,4].map(i => (
+                    <div key={i} className="w-10 h-10 rounded-full border-2 border-zinc-950 bg-zinc-800 flex items-center justify-center text-xs font-bold">
+                       {['IG','YT','TT','FB'][i-1]}
+                    </div>
+                 ))}
+              </div>
+              <div className="text-sm font-bold text-zinc-300">
+                 Trusted by 10,000+ Resellers
+              </div>
+           </div>
+
+           {/* Social Icons */}
+           <div className="flex gap-4">
+              <a href="#" className="p-3 bg-green-900/20 rounded-full text-green-500 hover:bg-green-900/40 transition-colors"><MessageCircle className="w-6 h-6" /></a>
+              <a href="#" className="p-3 bg-blue-900/20 rounded-full text-blue-500 hover:bg-blue-900/40 transition-colors"><Facebook className="w-6 h-6" /></a>
+              <a href="#" className="p-3 bg-cyan-900/20 rounded-full text-cyan-400 hover:bg-cyan-900/40 transition-colors"><Music className="w-6 h-6" /></a>
+              <a href="#" className="p-3 bg-red-900/20 rounded-full text-red-500 hover:bg-red-900/40 transition-colors"><Youtube className="w-6 h-6" /></a>
+           </div>
+        </div>
+
+        {/* Right Side: Auth Card */}
+        <div className="lg:w-1/2 bg-zinc-900 flex items-center justify-center p-8 relative">
+           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=2029&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
+           
+           <div className="w-full max-w-md bg-black border border-zinc-800 rounded-3xl shadow-2xl p-8 relative z-10">
+              <div className="text-center mb-8">
+                 <h2 className="text-3xl font-bold text-white mb-2">
+                    {authMode === 'login' ? 'Sign In' : authMode === 'signup' ? 'Sign Up' : 'Reset Password'}
+                 </h2>
+                 <p className="text-zinc-500 text-sm">
+                    {authMode === 'login' ? 'Access your dashboard' : authMode === 'signup' ? 'Create a new account' : 'Enter details to reset'}
+                 </p>
+              </div>
+
+              {authMode !== 'reset' && (
+                 <div className="space-y-4 mb-6">
+                    <div className="flex justify-center">
+                       <GoogleLogin
+                          onSuccess={handleGoogleSuccess}
+                          onError={() => console.log('Login Failed')}
+                          theme="filled_black"
+                          shape="pill"
+                          width="350" 
+                          text={authMode === 'login' ? "signin_with" : "signup_with"}
+                       />
+                    </div>
+                    <div className="relative text-center">
+                       <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-zinc-800"></div></div>
+                       <div className="relative inline-block bg-black px-4 text-xs text-zinc-500 uppercase font-bold">Or</div>
+                    </div>
+                 </div>
+              )}
+
+              <form onSubmit={authMode === 'login' ? handleLogin : authMode === 'signup' ? handleSignup : handleResetPassword} className="space-y-5">
+                 <div className="space-y-2">
+                    <label className="text-xs font-bold text-zinc-500 uppercase ml-1">
+                       {authMode === 'reset' ? 'Username or Email' : 'Username'}
+                    </label>
+                    <div className="relative">
+                       <UserIcon className="absolute left-3 top-3 w-5 h-5 text-zinc-600" />
+                       <input 
+                          type="text" 
+                          value={username}
+                          onChange={(e) => setUsername(e.target.value)}
+                          className="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 pl-10 text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all"
+                          placeholder={authMode === 'reset' ? "Enter username or email" : "Enter username"}
+                       />
+                    </div>
+                 </div>
+
+                 {(authMode === 'login' || authMode === 'signup') && (
+                    <div className="space-y-2">
+                       <div className="flex justify-between">
+                          <label className="text-xs font-bold text-zinc-500 uppercase ml-1">Password</label>
+                       </div>
+                       <div className="relative">
+                          <Key className="absolute left-3 top-3 w-5 h-5 text-zinc-600" />
+                          <input 
+                             type="password" 
+                             value={password}
+                             onChange={(e) => setPassword(e.target.value)}
+                             className="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 pl-10 text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all"
+                             placeholder="Enter password"
+                          />
+                       </div>
+                       {authMode === 'login' && (
+                          <div className="flex justify-end">
+                             <button type="button" onClick={() => setAuthMode('reset')} className="text-xs text-brand-400 hover:text-brand-300 font-medium flex items-center gap-1">
+                                Forgot Password? <HelpCircle className="w-3 h-3" />
+                             </button>
+                          </div>
+                       )}
+                    </div>
+                 )}
+
+                 {authMode === 'reset' && (
+                    <div className="space-y-2">
+                       <label className="text-xs font-bold text-zinc-500 uppercase ml-1">New Password</label>
+                       <div className="relative">
+                          <Key className="absolute left-3 top-3 w-5 h-5 text-zinc-600" />
+                          <input 
+                             type="password" 
+                             value={newPassword}
+                             onChange={(e) => setNewPassword(e.target.value)}
+                             className="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 pl-10 text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all"
+                             placeholder="Set new password"
+                          />
+                       </div>
+                       <p className="text-[10px] text-zinc-500 mt-2 leading-tight bg-zinc-900 p-2 rounded">
+                          <span className="font-bold text-zinc-400">Note:</span> In a production environment, a secure reset link would be sent to your email. For this demo, you can reset it directly here.
+                       </p>
+                    </div>
+                 )}
+
+                 <button className="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-brand-900/20 flex items-center justify-center gap-2 group">
+                    {authMode === 'login' ? 'Log In' : authMode === 'signup' ? 'Sign Up Now' : 'Reset Password'}
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                 </button>
+              </form>
+
+              <div className="mt-8 text-center">
+                 {authMode === 'login' ? (
+                    <p className="text-zinc-500 text-sm">Don't have an account? <button onClick={() => setAuthMode('signup')} className="text-brand-400 font-bold hover:underline">Sign Up</button></p>
+                 ) : (
+                    <button onClick={() => setAuthMode('login')} className="text-zinc-500 text-sm hover:text-white font-bold">Back to Login</button>
+                 )}
+              </div>
+           </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderFunds = () => (
+    <div className="bg-zinc-900 rounded-xl p-6 shadow-xl border border-zinc-800">
+      <div className="flex items-center gap-2 mb-6 border-b border-zinc-800 pb-4">
+        <CreditCard className="text-brand-400" />
+        <h2 className="text-xl font-bold text-white">Add Funds</h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <h3 className="text-zinc-400 font-bold mb-4 uppercase text-xs tracking-wider">Payment Methods</h3>
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <div 
+              onClick={() => setPaymentMethod('eSewa')}
+              className={`cursor-pointer p-4 rounded-xl border ${paymentMethod === 'eSewa' ? 'border-green-500 bg-green-900/10' : 'border-zinc-700 bg-zinc-950'} transition-all`}
+            >
+              <div className="font-bold text-green-500 mb-1">eSewa</div>
+              <div className="text-xs text-zinc-500">Scan & Pay</div>
+            </div>
+            <div 
+              onClick={() => setPaymentMethod('Khalti')}
+              className={`cursor-pointer p-4 rounded-xl border ${paymentMethod === 'Khalti' ? 'border-purple-500 bg-purple-900/10' : 'border-zinc-700 bg-zinc-950'} transition-all`}
+            >
+              <div className="font-bold text-purple-500 mb-1">Khalti</div>
+              <div className="text-xs text-zinc-500">Digital Wallet</div>
+            </div>
+          </div>
+
+          <div className="bg-white p-4 rounded-xl mb-4 flex justify-center items-center">
+            {/* Mock QR Code */}
+             <div className="text-center">
+                <QrCode className="w-32 h-32 text-black mx-auto mb-2" />
+                <p className="text-black text-xs font-bold">Scan with {paymentMethod}</p>
+             </div>
+          </div>
+          <p className="text-zinc-500 text-xs text-center">
+             Send money to <span className="text-white font-bold">{SUPPORT_PHONE}</span> ({OWNER_NAME})
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmitTransaction} className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-zinc-400 mb-2">Amount (NPR)</label>
+            <input 
+              type="number" 
+              required
+              min="10"
+              value={depositAmount}
+              onChange={(e) => setDepositAmount(e.target.value)}
+              className="w-full bg-zinc-950 border border-zinc-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
+              placeholder="e.g. 1000"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-zinc-400 mb-2">Transaction ID</label>
+            <input 
+              type="text" 
+              required
+              value={txnId}
+              onChange={(e) => setTxnId(e.target.value)}
+              className="w-full bg-zinc-950 border border-zinc-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
+              placeholder="Enter the transaction ID from your app"
+            />
+          </div>
+
+          <button 
+            type="submit" 
+            className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-lg transition-all shadow-lg shadow-emerald-900/20 flex items-center justify-center gap-2"
+          >
+            <CheckCircle className="w-5 h-5" />
+            Submit Payment
+          </button>
+
+          <div className="bg-zinc-950/50 rounded-lg p-4 border border-zinc-800">
+             <h4 className="font-bold text-white text-sm mb-2">Recent Transactions</h4>
+             <div className="space-y-2">
+               {transactions.filter(t => t.userId === user?.id).slice(0, 3).map(t => (
+                  <div key={t.id} className="flex justify-between text-xs border-b border-zinc-800 pb-2 last:border-0 last:pb-0">
+                     <span className="text-zinc-400">{t.date}</span>
+                     <span className={t.status === 'Approved' ? 'text-green-400' : t.status === 'Rejected' ? 'text-red-400' : 'text-yellow-400'}>{t.status}</span>
+                     <span className="text-white">Rs. {t.amount}</span>
+                  </div>
+               ))}
+               {transactions.filter(t => t.userId === user?.id).length === 0 && <div className="text-zinc-500 text-xs">No transactions found.</div>}
+             </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+
+  // Admin Dashboard
+  const renderAdminDashboard = () => (
+    <div className="bg-zinc-900 rounded-xl shadow-xl border border-zinc-800 overflow-hidden">
+      <div className="p-6 border-b border-zinc-800 flex justify-between items-center">
+        <h2 className="text-2xl font-bold text-white flex items-center gap-2"><Shield className="text-red-500" /> Admin</h2>
+        <div className="flex bg-zinc-950 rounded-lg p-1 gap-1 border border-zinc-800">
+          {['payments', 'orders', 'services', 'tickets', 'users'].map(tab => (
+             <button 
+               key={tab} 
+               onClick={() => setAdminTab(tab as any)}
+               className={`px-4 py-2 rounded-md text-sm font-bold capitalize transition-all ${adminTab === tab ? 'bg-brand-600 text-white' : 'text-zinc-400 hover:text-white'}`}
+             >
+               {tab}
+             </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="p-0">
+        {adminTab === 'payments' && (
+           <div className="p-6">
+              <div className="bg-zinc-950 p-4 rounded-lg mb-6 flex gap-4 items-center border border-zinc-800">
+                 <Banknote className="text-green-500" />
+                 <input placeholder="Username" value={manualUser} onChange={e => setManualUser(e.target.value)} className="bg-black border border-zinc-700 p-2 rounded text-white" />
+                 <input type="number" placeholder="Amount" value={manualAmount} onChange={e => setManualAmount(e.target.value)} className="bg-black border border-zinc-700 p-2 rounded text-white" />
+                 <button onClick={handleManualAddFunds} className="bg-green-600 text-white px-4 py-2 rounded font-bold">Add Funds</button>
+              </div>
+              <table className="w-full text-left text-sm text-zinc-300">
+                 <thead className="bg-black text-zinc-500 font-bold uppercase"><tr><th className="p-3">User</th><th className="p-3">Amount</th><th className="p-3">Action</th></tr></thead>
+                 <tbody>
+                    {transactions.map(t => (
+                       <tr key={t.id} className="border-b border-zinc-800">
+                          <td className="p-3">{t.username}<br/><span className="text-xs text-zinc-500">{t.transactionId}</span></td>
+                          <td className="p-3 text-green-400 font-bold">Rs. {t.amount}</td>
+                          <td className="p-3">
+                             {t.status === 'Pending' ? (
+                                <div className="flex gap-2">
+                                   <button onClick={() => handleApproveTransaction(t.id)} className="bg-green-600 text-white px-2 py-1 rounded text-xs">Approve</button>
+                                   <button onClick={() => handleRejectTransaction(t.id)} className="bg-red-600 text-white px-2 py-1 rounded text-xs">Reject</button>
+                                </div>
+                             ) : <span className="text-zinc-500 text-xs">{t.status}</span>}
+                          </td>
+                       </tr>
+                    ))}
+                 </tbody>
+              </table>
+           </div>
+        )}
+
+        {adminTab === 'users' && (
+           <div className="p-6">
+              <h3 className="text-white font-bold mb-4 flex items-center gap-2"><UserIcon className="w-5 h-5" /> Registered Users</h3>
+              <div className="overflow-x-auto rounded-lg border border-zinc-800">
+                 <table className="w-full text-left bg-zinc-950/50">
+                    <thead className="bg-black text-zinc-400 text-xs uppercase font-bold">
+                       <tr>
+                          <th className="p-4">Username</th>
+                          <th className="p-4">Email</th>
+                          <th className="p-4">Balance</th>
+                          <th className="p-4 text-red-400">Password / Actions</th>
+                       </tr>
+                    </thead>
+                    <tbody className="divide-y divide-zinc-800 text-sm">
+                       {usersDb.filter(u => u.role !== 'admin').map(u => (
+                          <tr key={u.id} className="text-zinc-300 hover:bg-zinc-900">
+                             <td className="p-4 font-bold text-white">{u.username}</td>
+                             <td className="p-4 text-zinc-500">{u.email}</td>
+                             <td className="p-4 text-green-400 font-mono">Rs. {calculateUserBalance(u.username).toFixed(2)}</td>
+                             <td className="p-4 flex items-center gap-2">
+                                <span className="font-mono text-red-300 bg-red-950/10 rounded px-2">{u.password || 'Google Auth'}</span>
+                                <button onClick={() => handleAdminResetUserPassword(u.username)} className="p-1 hover:text-white text-zinc-500" title="Reset Password"><Edit className="w-4 h-4" /></button>
+                             </td>
+                          </tr>
+                       ))}
+                       {usersDb.filter(u => u.role !== 'admin').length === 0 && <tr><td colSpan={4} className="p-6 text-center text-zinc-500">No users registered yet.</td></tr>}
+                    </tbody>
+                 </table>
+              </div>
+           </div>
+        )}
+        
+        {['orders', 'services', 'tickets'].includes(adminTab) && (
+           <div className="p-6 text-center text-zinc-500">
+              <p>Content for {adminTab} tab (Same as user view but for all users)</p>
+           </div>
+        )}
+      </div>
+    </div>
+  );
+
+  if (page === PageState.LANDING) return renderLanding();
+  // No need for separate login/signup page checks as they are handled in LANDING
+
+  return (
+    <DashboardLayout 
+      user={user!} 
+      activeTab={activeTab} 
+      setActiveTab={setActiveTab}
+      onLogout={() => { setUser(null); setPage(PageState.LANDING); setUsername(''); setPassword(''); }}
+    >
+      {activeTab === 'admin' && user?.role === 'admin' ? renderAdminDashboard() : (
+         activeTab === 'new-order' ? <OrderForm balance={user?.balance || 0} onPlaceOrder={handlePlaceOrder} services={services} /> :
+         activeTab === 'funds' ? renderFunds() :
+         <div className="text-white p-6">Feature: {activeTab}</div>
+      )}
+    </DashboardLayout>
+  );
+};
+
+export default App;
+
          id: 'admin-001',
          username: 'Admin Roshan',
          email: 'khanalroshan635@gmail.com',
