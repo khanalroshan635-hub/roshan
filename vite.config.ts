@@ -7,8 +7,9 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     define: {
-      // This allows using process.env.API_KEY in the browser
-      'process.env.API_KEY': JSON.stringify(env.API_KEY)
+      // This allows using process.env variables in the browser
+      'process.env.API_KEY': JSON.stringify(env.API_KEY),
+      'process.env.GOOGLE_CLIENT_ID': JSON.stringify(env.GOOGLE_CLIENT_ID)
     }
   }
 })
